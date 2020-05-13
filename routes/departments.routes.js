@@ -52,8 +52,8 @@ router.put('/departments/:id', async (req, res) => {
   try {
     const dep = Department.findById({ _id: req.params.id });
     if (dep) {
+      res.json(await dep)
       await Department.updateOne({ _id: req.params.id }, { $set: { name: name } });
-      res.json({ message: 'OK' })
     }
     else res.status(404).json({ message: 'Not found...' })
 
@@ -68,8 +68,9 @@ router.delete('/departments/:id', async (req, res) => {
   try {
     const dep = Department.findById({ _id: req.params.id })
     if (dep) {
+      res.json(await dep)
       await Department.deleteOne({ _id: req.params.id })
-      res.json({ mesage: 'OK' })
+
     }
   }
   catch (err) {
