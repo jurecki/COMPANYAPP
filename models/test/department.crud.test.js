@@ -20,24 +20,36 @@ describe('Department', () => {
 
     describe('Reading data', () => {
 
-        before(async () => {
-            const testDepOne = new Department({ name: 'Department #1' });
-            await testDepOne.save();
-
-            const testDepTwo = new Department({ name: 'Department #2' });
-            await testDepTwo.save();
-        });
+        /* before(async () => {
+             const testDepOne = new Department({ name: 'Department1' });
+             await testDepOne.save();
+             const testDepTwo = new Department({ name: 'Department1' });
+             await testDepTwo.save();
+         });
+ **/
 
         it('should return all the data with "find" method', async () => {
+
+            const testDepOne = new Department({ name: 'Department1' });
+            testDepOne.save();
+            const testDepTwo = new Department({ name: 'Department1' });
+            testDepTwo.save();
+
             const departments = await Department.find();
             const expectedLength = 2;
             expect(departments.length).to.be.equal(expectedLength);
+
+            Department.deleteMany();
         });
 
         it('should return a proper document by "name" with "findOne" method', async () => {
-            const department = await Department.findOne({ name: 'Department #1' });
-            const expectedName = 'Department #1';
+            const testDepOne = new Department({ name: 'Department1' });
+            testDepOne.save();
+            const department = await Department.findOne({ name: 'Department1' });
+            const expectedName = 'Department1';
             expect(department.name).to.be.equal(expectedName);
+
+            Department.deleteMany();
         });
 
         after(async () => {
